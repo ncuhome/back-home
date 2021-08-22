@@ -2,9 +2,9 @@ import { campusData } from '@/utils/data';
 import network from 'mincu-network';
 import ui from 'mincu-ui';
 
-// TODO: 持久化缓存
 export default {
   state: {
+    status: '加载中...',
     // 返校时间
     reachDate: undefined, // 返校日期 YYYY-MM-DD
     reachStartTime: undefined as unknown as Date, // 返校时间段 HH:mm

@@ -21,7 +21,7 @@ const App = () => {
   const { reachDate, reachStartTime, reachEndTime } = state;
   const { origin, destination } = state;
   const { vehicleType, vehicleInfo, transit, vehicleArrivalTime } = state;
-  const { campus } = state;
+  const { campus, status } = state;
   const { setData, submit } = userDispatchers;
 
   const [visible, setVisible] = React.useState(false);
@@ -93,21 +93,35 @@ const App = () => {
             extra={dataModule.appData.user.profile.basicProfile.department}
           />
           <Card.Body>
-            为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校登记，通过辅导员审批后方可返校
+            为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校登记，通过辅导员审批后方可返校。
+            <br />
+            信息可多次填报，以最后一次填报为准。如果审核通过再重新填报，辅导员需要重新审核。
           </Card.Body>
-          <Card.Footer content={'当前状态：未审批'} />
+          <Card.Footer content={`当前状态: ${status}`} />
         </Card>
       </WingBlank>
       <WhiteSpace />
       <List renderHeader={() => '⏰ 返校时间'} renderFooter={() => '时间段最长为五个小时'}>
-        <DatePicker mode="date" value={reachDate} onChange={(e: any) => setData({ reachDate: e })} minDate={now}>
+        <DatePicker
+          mode="date"
+          title={'返校日期'}
+          value={reachDate}
+          onChange={(e: any) => setData({ reachDate: e })}
+          minDate={now}
+        >
           <List.Item arrow="horizontal">返校日期</List.Item>
         </DatePicker>
-        <DatePicker mode="time" value={reachStartTime} onChange={(e: any) => setData({ reachStartTime: e })}>
+        <DatePicker
+          mode="time"
+          title={'开始时间'}
+          value={reachStartTime}
+          onChange={(e: any) => setData({ reachStartTime: e })}
+        >
           <List.Item arrow="horizontal">开始时间</List.Item>
         </DatePicker>
         <DatePicker
           mode="time"
+          title={'结束时间'}
           value={reachEndTime}
           onChange={(e: any) => setData({ reachEndTime: e })}
           minDate={reachStartTime}
@@ -117,11 +131,18 @@ const App = () => {
         </DatePicker>
       </List>
       <List renderHeader={() => '📄 基本信息'}>
-        <Picker extra="请选择" data={placeData} value={origin} onChange={(e: any) => setData({ origin: e })}>
+        <Picker
+          extra="请选择"
+          title={'始发地'}
+          data={placeData}
+          value={origin}
+          onChange={(e: any) => setData({ origin: e })}
+        >
           <List.Item arrow="horizontal">始发地</List.Item>
         </Picker>
         <Picker
           extra="请选择"
+          title={'目的地'}
           data={destinationsData}
           cols={1}
           value={destination}
@@ -138,6 +159,7 @@ const App = () => {
       >
         <Picker
           extra="请选择"
+          title={'交通工具'}
           data={vehiclesData}
           value={vehicleType}
           cols={1}
@@ -161,7 +183,12 @@ const App = () => {
         >
           中转地点
         </InputItem>
-        <DatePicker value={vehicleArrivalTime} onChange={(e: any) => setData({ vehicleArrivalTime: e })} minDate={now}>
+        <DatePicker
+          value={vehicleArrivalTime}
+          title={'交通工具到达时间'}
+          onChange={(e: any) => setData({ vehicleArrivalTime: e })}
+          minDate={now}
+        >
           <List.Item arrow="horizontal">交通工具到达时间</List.Item>
         </DatePicker>
       </List>
