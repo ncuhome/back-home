@@ -1,18 +1,18 @@
-interface ResOfXh {
-  status: number;
-  message: string;
-  data: { xh: number; name: string; token?: string };
-}
+interface IData {
+  reach_date: string;
+  reach_start_time: string;
+  reach_end_time: string;
 
-interface ResOfVerifyCode {
-  status: number;
-  message: string;
-}
+  // 基本信息
+  origin: string;
+  destination: string;
 
-interface ReqComplete {
-  verify_code: string;
-  phone_num: string;
-  password: string;
-  token: string;
-  qq: string;
+  // 交通信息
+  vehicle_type: string;
+  vehicle_info: string;
+  transit?: string;
+  vehicle_arrive_time: string;
+
+  // 校区
+  campus: string;
 }

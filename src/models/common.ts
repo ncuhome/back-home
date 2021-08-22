@@ -2,6 +2,7 @@ import { campusData } from '@/utils/data';
 import { getStatus } from '@/utils/common';
 import network from 'mincu-network';
 import ui from 'mincu-ui';
+import dayjs from 'dayjs';
 
 export default {
   state: {
@@ -37,6 +38,33 @@ export default {
       try {
         const { data } = await network.fetch.get('https://os.ncuos.com/api/stagger/before/student');
 
+        if (data.data) {
+          const {
+            vehicle_arrive_time,
+            transit,
+            reach_date,
+            reach_start_time,
+            reach_end_time,
+            vehicle_type,
+            vehicle_info,
+            campus = campusData[0].value,
+            destination,
+          } = data.data as IData;
+
+          const reachDate = new Date(dayjs(reach_date).valueOf());
+          (this as any).setData({
+            campus,
+            origin: origin?.split('-'),
+            destination: [destination],
+            transit,
+            reachDate,
+            reachStartTime: new Date(dayjs(`${reach_date} ${reach_start_time}`).valueOf()),
+            reachEndTime: new Date(dayjs(`${reach_date} ${reach_end_time}`).valueOf()),
+            vehicleType: [vehicle_type],
+            vehicleInfo: vehicle_info,
+            vehicleArriveTime: new Date(dayjs(`${reach_date} ${vehicle_arrive_time}`).valueOf()),
+          });
+        }
         (this as any).setData({ status: getStatus(data.code) });
       } catch (e) {
         ui.fail('未知错误，请重试');
@@ -62,9 +90,9 @@ export default {
 
       try {
         const params = {
-          reach_date,
-          reach_start_time,
-          reach_end_time,
+          reach_date: dayjs(reach_date).format('YYYY-MM-DD'),
+          reach_start_time: dayjs(reach_start_time).format('HH:mm:ss'),
+          reach_end_time: dayjs(reach_end_time).format('HH:mm:ss'),
 
           // 基本信息
           origin: origin?.join('-') ?? '未知',
@@ -74,13 +102,11 @@ export default {
           vehicle_type: vehicle_type?.[0] ?? '未知',
           vehicle_info,
           transit,
-          vehicle_arrive_time,
+          vehicle_arrive_time: dayjs(vehicle_arrive_time).format('HH:mm:ss'),
 
           // 校区
           campus,
         };
-
-        console.log(JSON.stringify(params));
 
         const { data } = await network.fetch.post('https://os.ncuos.com/api/stagger/before/student', params);
 
@@ -94,7 +120,6 @@ export default {
           ui.fail(message);
         }
       } catch (e) {
-        console.log(e);
         ui.fail('未知错误，请重试');
       } finally {
         loadingTip();
