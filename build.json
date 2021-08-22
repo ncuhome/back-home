@@ -4,17 +4,10 @@
   },
   "hash": true,
   "modularImportRuntime": true,
-  "externals": {
-    "react": "React",
-    "react-dom": "ReactDOM"
-  },
   "plugins": [
     [
       "build-plugin-antd",
       {
-        "themeConfig": {
-          "brand-primary": "#1DA57A"
-        },
         "importOptions": {
           "libraryName": "antd-mobile",
           "libraryDirectory": "es",

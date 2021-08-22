@@ -1,10 +1,12 @@
 import React from 'react';
-import { WhiteSpace, Radio, Picker, DatePicker, List, InputItem, Button, WingBlank, Modal } from 'antd-mobile';
+import dataModule from 'mincu-data';
+import { WhiteSpace, Radio, Picker, DatePicker, List, InputItem, Button, WingBlank, Modal, Card } from 'antd-mobile';
 import { data as placeData } from '@/utils/third-level-address';
 import { vehiclesData, destinationsData, campusData, promiseData } from '@/utils/data';
 import { useSafeArea } from 'mincu-react';
 import { getCalcTime } from '@/utils/common';
 import store from '@/store';
+import './index.scss';
 
 const now = new Date(Date.now());
 
@@ -53,8 +55,28 @@ const App = () => {
     );
   };
 
+  const getName = () => {
+    const sex = dataModule.appData.user.profile.entireProfile.base_info.xb.dm ? '👨‍🎓' : '👩‍🎓';
+    const { name } = dataModule.appData.user.profile.basicProfile;
+    return `${sex} ${name}`;
+  };
+
   return (
     <>
+      <WhiteSpace />
+      <WingBlank size="md">
+        <Card full>
+          <Card.Header
+            style={{ background: '#1874ff' }}
+            title={getName()}
+            extra={dataModule.appData.user.profile.basicProfile.department}
+          />
+          <Card.Body>
+            为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校登记，通过辅导员审批后方可返校
+          </Card.Body>
+        </Card>
+      </WingBlank>
+      <WhiteSpace />
       <List renderHeader={() => '返校时间'} renderFooter={() => '时间段最长为五个小时'}>
         <DatePicker mode="date" value={reachDate} onChange={(e: any) => setData({ reachDate: e })} minDate={now}>
           <List.Item arrow="horizontal">返校日期</List.Item>
@@ -78,7 +100,6 @@ const App = () => {
           <List.Item arrow="horizontal">结束时间</List.Item>
         </DatePicker>
       </List>
-
       <List renderHeader={() => '基本信息'}>
         <Picker extra="请选择" data={placeData} value={origin} onChange={(e: any) => setData({ placeData: e })}>
           <List.Item arrow="horizontal">始发地</List.Item>
@@ -93,7 +114,6 @@ const App = () => {
           <List.Item arrow="horizontal">目的地</List.Item>
         </Picker>
       </List>
-
       <List
         renderHeader={() => '交通信息'}
         renderFooter={() => '没有确切车辆信息，请填写大概出发时间。如自驾，请填写交通工具信息中填写自带车牌照'}
@@ -128,7 +148,6 @@ const App = () => {
         </DatePicker>
       </List>
       <WhiteSpace />
-
       <List renderHeader={() => '选择校区'}>
         {campusData.map((i) => (
           <Radio.RadioItem key={i.value} checked={campus === i.value} onChange={() => setData({ campus: i.value })}>
@@ -136,15 +155,16 @@ const App = () => {
           </Radio.RadioItem>
         ))}
       </List>
-
       <WhiteSpace size="lg" />
       <WhiteSpace size="lg" />
       <WingBlank>
-        <Button type="primary" onClick={() => setVisible(true)}>
+        <Button type="primary" style={{ background: '#1874ff' }} onClick={() => setVisible(true)}>
           提交
         </Button>
       </WingBlank>
-      <div style={{ height: bottom + 30 }} />
+      <div style={{ height: 40 }} />
+      <div style={{ textAlign: 'center', color: '#a5a5a5' }}>南昌大学家园工作室</div>
+      <div style={{ height: bottom + 10 }} />
       {renderModal()}
     </>
   );
