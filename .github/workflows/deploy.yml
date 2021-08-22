@@ -42,6 +42,6 @@ jobs:
        folder: build
        accessKeyId: ${{ secrets.ACCESSKEYID }}
        accessKeySecret: ${{ secrets.ACCESSKEYSECRET }}
-       bucket: registry-incu
-       endpoint: oss-cn-beijing.aliyuncs.com
+       bucket: incu-back-home
+       endpoint: oss-cn-hangzhou.aliyuncs.com
        skipSetting: true
