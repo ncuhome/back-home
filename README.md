@@ -1,6 +1,11 @@
 
 # 返校登记（学生端）
 
+## 预览
+
+<img src="screenshot-up.png" width="50%" />
+<img src="screenshot-down.png" width="50%" />
+
 ## 背景
 
 部署在南大家园 APP 上，负责疫情期间的返校登记
