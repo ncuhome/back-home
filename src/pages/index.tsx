@@ -77,7 +77,7 @@ const App = () => {
         </Card>
       </WingBlank>
       <WhiteSpace />
-      <List renderHeader={() => '返校时间'} renderFooter={() => '时间段最长为五个小时'}>
+      <List renderHeader={() => '⏰ 返校时间'} renderFooter={() => '时间段最长为五个小时'}>
         <DatePicker mode="date" value={reachDate} onChange={(e: any) => setData({ reachDate: e })} minDate={now}>
           <List.Item arrow="horizontal">返校日期</List.Item>
         </DatePicker>
@@ -100,7 +100,7 @@ const App = () => {
           <List.Item arrow="horizontal">结束时间</List.Item>
         </DatePicker>
       </List>
-      <List renderHeader={() => '基本信息'}>
+      <List renderHeader={() => '📄 基本信息'}>
         <Picker extra="请选择" data={placeData} value={origin} onChange={(e: any) => setData({ placeData: e })}>
           <List.Item arrow="horizontal">始发地</List.Item>
         </Picker>
@@ -114,8 +114,10 @@ const App = () => {
           <List.Item arrow="horizontal">目的地</List.Item>
         </Picker>
       </List>
+      <WhiteSpace />
+
       <List
-        renderHeader={() => '交通信息'}
+        renderHeader={() => '🚗 交通信息'}
         renderFooter={() => '没有确切车辆信息，请填写大概出发时间。如自驾，请填写交通工具信息中填写自带车牌照'}
       >
         <Picker
@@ -147,8 +149,7 @@ const App = () => {
           <List.Item arrow="horizontal">交通工具到达时间</List.Item>
         </DatePicker>
       </List>
-      <WhiteSpace />
-      <List renderHeader={() => '选择校区'}>
+      <List renderHeader={() => '🏝 选择校区'}>
         {campusData.map((i) => (
           <Radio.RadioItem key={i.value} checked={campus === i.value} onChange={() => setData({ campus: i.value })}>
             {i.label}
