@@ -7,7 +7,7 @@ const now = new Date(Date.now());
 
 function Transport() {
   const [state, userDispatchers] = store.useModel('common');
-  const { vehicleType, vehicleInfo, transit, vehicleArrivalTime } = state;
+  const { vehicleType, vehicleInfo, transit, vehicleArriveTime } = state;
   const { setData } = userDispatchers;
 
   return (
@@ -42,9 +42,9 @@ function Transport() {
         中转地点
       </InputItem>
       <DatePicker
-        value={vehicleArrivalTime}
+        value={vehicleArriveTime}
         title={'交通工具到达时间'}
-        onChange={(e: any) => setData({ vehicleArrivalTime: e })}
+        onChange={(e: any) => setData({ vehicleArriveTime: e })}
         minDate={now}
       >
         <List.Item arrow="horizontal">交通工具到达时间</List.Item>

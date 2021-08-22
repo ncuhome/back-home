@@ -1,15 +1,23 @@
 import React from 'react';
 import { WingBlank, Card } from 'antd-mobile';
 import dataModule from 'mincu-data';
+import network from 'mincu-network';
 import store from '@/store';
 
 function Header() {
   const [state, userDispatchers] = store.useModel('common');
+  const { initialStatus } = userDispatchers;
+
   const getName = () => {
     const sex = dataModule.appData.user.profile.entireProfile.base_info.xb.dm ? '👨‍🎓' : '👩‍🎓';
     const { name } = dataModule.appData.user.profile.basicProfile;
     return `${sex} ${name}`;
   };
+
+  React.useEffect(() => {
+    network.token = dataModule.appData.user.token;
+    initialStatus();
+  }, []);
 
   return (
     <WingBlank size="md">

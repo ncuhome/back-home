@@ -27,5 +27,19 @@ export const getCalcTime = (
     return new Date(now.set('hour', 23).set('minute', 59).valueOf());
   }
 
+  // eslint-disable-next-line @iceworks/best-practices/recommend-polyfill
   return new Date(changed.valueOf());
+};
+
+const statusMap = {
+  [-2]: '暂时不返校',
+  [-1]: '延迟返校',
+  0: '未登记',
+  1: '已登记并审核中',
+  2: '审批通过',
+  3: '已返校',
+};
+
+export const getStatus = (code: number): string => {
+  return statusMap[code];
 };

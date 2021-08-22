@@ -1,4 +1,5 @@
 import { campusData } from '@/utils/data';
+import { getStatus } from '@/utils/common';
 import network from 'mincu-network';
 import ui from 'mincu-ui';
 
@@ -18,7 +19,7 @@ export default {
     vehicleType: undefined, // 交通工具
     vehicleInfo: undefined as unknown as string, // 车次 / 航班 / 车辆信息
     transit: undefined as unknown as string, // 中转站
-    vehicleArrivalTime: undefined, // 交通工具到达时间
+    vehicleArriveTime: undefined, // 交通工具到达时间
 
     // 校区
     campus: campusData[0].value,
@@ -30,6 +31,19 @@ export default {
     },
   },
   effects: () => ({
+    async initialStatus() {
+      const loadingTip = await ui.loading('加载中', 0);
+
+      try {
+        const { data } = await network.fetch.get('https://os.ncuos.com/api/stagger/before/student');
+
+        (this as any).setData({ status: getStatus(data.code) });
+      } catch (e) {
+        ui.fail('未知错误，请重试');
+      } finally {
+        loadingTip();
+      }
+    },
     async submit(payload, rootState) {
       const {
         campus,
@@ -37,19 +51,19 @@ export default {
         destination,
         transit,
         reachDate: reach_date,
-        reachStartTime: reach_star_time,
+        reachStartTime: reach_start_time,
         reachEndTime: reach_end_time,
         vehicleType: vehicle_type = [],
         vehicleInfo: vehicle_info,
-        vehicleArrivalTime: vehicle_arrival_time,
+        vehicleArriveTime: vehicle_arrive_time,
       } = rootState.common;
 
       const loadingTip = await ui.loading('加载中', 0);
 
       try {
-        const res = await network.fetch.post('https://os.ncuos.com/api/stagger/before/student', {
+        const params = {
           reach_date,
-          reach_star_time,
+          reach_start_time,
           reach_end_time,
 
           // 基本信息
@@ -60,14 +74,27 @@ export default {
           vehicle_type: vehicle_type?.[0] ?? '未知',
           vehicle_info,
           transit,
-          vehicle_arrival_time,
+          vehicle_arrive_time,
 
           // 校区
           campus,
-        });
+        };
 
-        console.log(res);
+        console.log(JSON.stringify(params));
+
+        const { data } = await network.fetch.post('https://os.ncuos.com/api/stagger/before/student', params);
+
+        const { status, message } = data;
+
+        if (status) {
+          (this as any).setData({ status: getStatus(1) });
+
+          ui.success(message);
+        } else {
+          ui.fail(message);
+        }
       } catch (e) {
+        console.log(e);
         ui.fail('未知错误，请重试');
       } finally {
         loadingTip();
