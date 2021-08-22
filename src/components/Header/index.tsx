@@ -1,8 +1,10 @@
 import React from 'react';
 import { WingBlank, Card } from 'antd-mobile';
 import dataModule from 'mincu-data';
+import store from '@/store';
 
 function Header() {
+  const [state, userDispatchers] = store.useModel('common');
   const getName = () => {
     const sex = dataModule.appData.user.profile.entireProfile.base_info.xb.dm ? '👨‍🎓' : '👩‍🎓';
     const { name } = dataModule.appData.user.profile.basicProfile;
@@ -22,7 +24,7 @@ function Header() {
           <br />
           信息可多次填报，以最后一次填报为准。如果审核通过再重新填报，辅导员需要重新审核。
         </Card.Body>
-        <Card.Footer content={`当前状态: ${status}`} />
+        <Card.Footer content={`当前状态: ${state.status}`} />
       </Card>
     </WingBlank>
   );
