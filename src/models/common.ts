@@ -120,7 +120,7 @@ export default {
         if (status) {
           const { label, color } = getStatus(1);
           (this as any).setData({ status: label, labelColor: color });
-
+          window.scrollTo(0, 0);
           ui.success(message);
         } else {
           ui.fail(message);
