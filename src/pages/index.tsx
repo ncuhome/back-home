@@ -102,7 +102,7 @@ const App = () => {
         </DatePicker>
       </List>
       <List renderHeader={() => '📄 基本信息'}>
-        <Picker extra="请选择" data={placeData} value={origin} onChange={(e: any) => setData({ placeData: e })}>
+        <Picker extra="请选择" data={placeData} value={origin} onChange={(e: any) => setData({ origin: e })}>
           <List.Item arrow="horizontal">始发地</List.Item>
         </Picker>
         <Picker
@@ -110,7 +110,7 @@ const App = () => {
           data={destinationsData}
           cols={1}
           value={destination}
-          onChange={(e: any) => setData({ destinationsData: e })}
+          onChange={(e: any) => setData({ destination: e })}
         >
           <List.Item arrow="horizontal">目的地</List.Item>
         </Picker>
