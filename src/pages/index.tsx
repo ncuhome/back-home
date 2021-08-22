@@ -1,32 +1,26 @@
 import React from 'react';
 import ui from 'mincu-ui';
 import dayjs from 'dayjs';
-import dataModule from 'mincu-data';
-import { WhiteSpace, Radio, Picker, DatePicker, List, InputItem, Button, WingBlank, Modal, Card } from 'antd-mobile';
-import { data as placeData } from '@/utils/third-level-address';
-import { vehiclesData, destinationsData, campusData, promiseData } from '@/utils/data';
-import { useSafeArea } from 'mincu-react';
-import { getCalcTime } from '@/utils/common';
+import { WhiteSpace, Button, WingBlank, Modal } from 'antd-mobile';
+import { promiseData } from '@/utils/data';
 import store from '@/store';
-import logo from '@/image/logo.svg';
-import './index.scss';
 
-const now = new Date(Date.now());
+import Header from '@/components/Header';
+import Time from '@/components/Time';
+import Basic from '@/components/Basic';
+import Transport from '@/components/Transport';
+import Campus from '@/components/Campus';
+import Footer from '@/components/Footer';
+
+import './index.scss';
 
 /**
  * 建议使用真机调试
  */
 const App = () => {
-  const [state, userDispatchers] = store.useModel('common');
-  const { reachDate, reachStartTime, reachEndTime } = state;
-  const { origin, destination } = state;
-  const { vehicleType, vehicleInfo, transit, vehicleArrivalTime } = state;
-  const { campus, status } = state;
-  const { setData, submit } = userDispatchers;
-
   const [visible, setVisible] = React.useState(false);
-
-  const { bottom } = useSafeArea();
+  const [state, userDispatchers] = store.useModel('common');
+  const { submit } = userDispatchers;
 
   // 协议
   const renderModal = () => {
@@ -58,12 +52,7 @@ const App = () => {
     );
   };
 
-  const getName = () => {
-    const sex = dataModule.appData.user.profile.entireProfile.base_info.xb.dm ? '👨‍🎓' : '👩‍🎓';
-    const { name } = dataModule.appData.user.profile.basicProfile;
-    return `${sex} ${name}`;
-  };
-
+  // 校验
   const onNext = () => {
     const optionals = ['transit'];
     const pass = Object.keys(state).every((i) => optionals.includes(i) || state[i]);
@@ -84,134 +73,41 @@ const App = () => {
 
   return (
     <>
-      <WhiteSpace />
-      <WingBlank size="md">
-        <Card full>
-          <Card.Header
-            style={{ background: '#1874ff' }}
-            title={getName()}
-            extra={dataModule.appData.user.profile.basicProfile.department}
-          />
-          <Card.Body>
-            为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校登记，通过辅导员审批后方可返校。
-            <br />
-            信息可多次填报，以最后一次填报为准。如果审核通过再重新填报，辅导员需要重新审核。
-          </Card.Body>
-          <Card.Footer content={`当前状态: ${status}`} />
-        </Card>
-      </WingBlank>
-      <WhiteSpace />
-      <List renderHeader={() => '⏰ 返校时间'} renderFooter={() => '时间段最长为五个小时'}>
-        <DatePicker
-          mode="date"
-          title={'返校日期'}
-          value={reachDate}
-          onChange={(e: any) => setData({ reachDate: e })}
-          minDate={now}
-        >
-          <List.Item arrow="horizontal">返校日期</List.Item>
-        </DatePicker>
-        <DatePicker
-          mode="time"
-          title={'开始时间'}
-          value={reachStartTime}
-          onChange={(e: any) => setData({ reachStartTime: e })}
-        >
-          <List.Item arrow="horizontal">开始时间</List.Item>
-        </DatePicker>
-        <DatePicker
-          mode="time"
-          title={'结束时间'}
-          value={reachEndTime}
-          onChange={(e: any) => setData({ reachEndTime: e })}
-          minDate={reachStartTime}
-          maxDate={getCalcTime(reachStartTime, 'add', 5, 'hours')}
-        >
-          <List.Item arrow="horizontal">结束时间</List.Item>
-        </DatePicker>
-      </List>
-      <List renderHeader={() => '📄 基本信息'}>
-        <Picker
-          extra="请选择"
-          title={'始发地'}
-          data={placeData}
-          value={origin}
-          onChange={(e: any) => setData({ origin: e })}
-        >
-          <List.Item arrow="horizontal">始发地</List.Item>
-        </Picker>
-        <Picker
-          extra="请选择"
-          title={'目的地'}
-          data={destinationsData}
-          cols={1}
-          value={destination}
-          onChange={(e: any) => setData({ destination: e })}
-        >
-          <List.Item arrow="horizontal">目的地</List.Item>
-        </Picker>
-      </List>
+      {/* 状态指示栏 */}
+      <>
+        <WhiteSpace />
+        <Header />
+        <WhiteSpace />
+      </>
+
+      {/* 返校时间 */}
+      <Time />
+
+      {/* 基本信息 */}
+      <Basic />
       <WhiteSpace />
 
-      <List
-        renderHeader={() => '🚗 交通信息'}
-        renderFooter={() => '没有确切车辆信息，请填写大概出发时间。如自驾，请填写交通工具信息中填写自带车牌照'}
-      >
-        <Picker
-          extra="请选择"
-          title={'交通工具'}
-          data={vehiclesData}
-          value={vehicleType}
-          cols={1}
-          onChange={(e: any) => setData({ vehicleType: e })}
-        >
-          <List.Item arrow="horizontal">交通工具</List.Item>
-        </Picker>
-        <InputItem
-          clear
-          placeholder="例：G100-02-16F"
-          defaultValue={vehicleInfo}
-          onChange={(e: any) => setData({ vehicleInfo: e })}
-        >
-          详细信息
-        </InputItem>
-        <InputItem
-          clear
-          placeholder="如果无中转站，请忽略"
-          defaultValue={transit}
-          onChange={(e: any) => setData({ transit: e })}
-        >
-          中转地点
-        </InputItem>
-        <DatePicker
-          value={vehicleArrivalTime}
-          title={'交通工具到达时间'}
-          onChange={(e: any) => setData({ vehicleArrivalTime: e })}
-          minDate={now}
-        >
-          <List.Item arrow="horizontal">交通工具到达时间</List.Item>
-        </DatePicker>
-      </List>
-      <List renderHeader={() => '🏝 选择校区'}>
-        {campusData.map((i) => (
-          <Radio.RadioItem key={i.value} checked={campus === i.value} onChange={() => setData({ campus: i.value })}>
-            {i.label}
-          </Radio.RadioItem>
-        ))}
-      </List>
-      <WhiteSpace size="lg" />
-      <WhiteSpace size="lg" />
-      <WingBlank>
-        <Button type="primary" style={{ background: '#1874ff' }} onClick={onNext}>
-          提交
-        </Button>
-      </WingBlank>
-      <div style={{ height: 60 }} />
-      <div style={{ textAlign: 'center' }}>
-        <img src={logo} alt={'logo'} width={140} />
-        <div style={{ color: '#a5a5a5', marginTop: 5 }}>南昌大学家园工作室</div>
-      </div>
-      <div style={{ height: bottom + 30 }} />
+      {/* 交通信息 */}
+      <Transport />
+
+      {/* 选择校区 */}
+      <Campus />
+
+      {/* 提交 */}
+      <>
+        <WhiteSpace size="lg" />
+        <WhiteSpace size="lg" />
+
+        <WingBlank>
+          <Button type="primary" style={{ background: '#1874ff' }} onClick={onNext}>
+            提交
+          </Button>
+        </WingBlank>
+      </>
+
+      {/* LOGO */}
+      <Footer />
+
       {renderModal()}
     </>
   );
