@@ -18,5 +18,14 @@ export const getCalcTime = (
 ): Date | undefined => {
   if (!time) return undefined;
 
-  return new Date(dayjs(time as any)[mode](value, unit).valueOf());
+  const now = dayjs(time as any);
+  const changed = now[mode](value, unit);
+
+  const down = now.set('hour', 19);
+
+  if (now.isAfter(down)) {
+    return new Date(now.set('hour', 23).set('minute', 59).valueOf());
+  }
+
+  return new Date(changed.valueOf());
 };

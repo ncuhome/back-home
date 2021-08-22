@@ -1,4 +1,6 @@
 import React from 'react';
+import ui from 'mincu-ui';
+import dayjs from 'dayjs';
 import dataModule from 'mincu-data';
 import { WhiteSpace, Radio, Picker, DatePicker, List, InputItem, Button, WingBlank, Modal, Card } from 'antd-mobile';
 import { data as placeData } from '@/utils/third-level-address';
@@ -62,6 +64,24 @@ const App = () => {
     return `${sex} ${name}`;
   };
 
+  const onNext = () => {
+    const optionals = ['transit'];
+    const pass = Object.keys(state).every((i) => optionals.includes(i) || state[i]);
+    const timeMinuteRange = dayjs(state.reachStartTime).diff(dayjs(state.reachEndTime), 'minute');
+
+    if (!pass) {
+      ui.fail('请将信息补充完整');
+      return;
+    }
+
+    if (Math.abs(timeMinuteRange) > 5 * 60) {
+      ui.fail('返校时间段需在五个小时以内');
+      return;
+    }
+
+    setVisible(true);
+  };
+
   return (
     <>
       <WhiteSpace />
@@ -75,6 +95,7 @@ const App = () => {
           <Card.Body>
             为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校登记，通过辅导员审批后方可返校
           </Card.Body>
+          <Card.Footer content={'当前状态：未审批'} />
         </Card>
       </WingBlank>
       <WhiteSpace />
@@ -82,13 +103,7 @@ const App = () => {
         <DatePicker mode="date" value={reachDate} onChange={(e: any) => setData({ reachDate: e })} minDate={now}>
           <List.Item arrow="horizontal">返校日期</List.Item>
         </DatePicker>
-        <DatePicker
-          mode="time"
-          value={reachStartTime}
-          onChange={(e: any) => setData({ reachStartTime: e })}
-          minDate={getCalcTime(reachEndTime, 'subtract', 5, 'hours')}
-          maxDate={reachEndTime}
-        >
+        <DatePicker mode="time" value={reachStartTime} onChange={(e: any) => setData({ reachStartTime: e })}>
           <List.Item arrow="horizontal">开始时间</List.Item>
         </DatePicker>
         <DatePicker
@@ -160,7 +175,7 @@ const App = () => {
       <WhiteSpace size="lg" />
       <WhiteSpace size="lg" />
       <WingBlank>
-        <Button type="primary" style={{ background: '#1874ff' }} onClick={() => setVisible(true)}>
+        <Button type="primary" style={{ background: '#1874ff' }} onClick={onNext}>
           提交
         </Button>
       </WingBlank>

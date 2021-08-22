@@ -1,5 +1,6 @@
 import { campusData } from '@/utils/data';
 import network from 'mincu-network';
+import ui from 'mincu-ui';
 
 // TODO: 持久化缓存
 export default {
@@ -10,13 +11,13 @@ export default {
     reachEndTime: undefined as unknown as Date,
 
     // 基本信息
-    origin: undefined as unknown as string[], // 始发地   TODO:
-    destination: undefined, // 目的地
+    origin: undefined as unknown as string[], // 始发地
+    destination: undefined as unknown as string[], // 目的地
 
     // 交通信息
-    vehicleType: undefined, // 交通工具       TODO:
-    vehicleInfo: '', // 车次 / 航班 / 车辆信息
-    transit: '', // 中转站
+    vehicleType: undefined, // 交通工具
+    vehicleInfo: undefined as unknown as string, // 车次 / 航班 / 车辆信息
+    transit: undefined as unknown as string, // 中转站
     vehicleArrivalTime: undefined, // 交通工具到达时间
 
     // 校区
@@ -43,26 +44,34 @@ export default {
         vehicleArrivalTime: vehicle_arrival_time,
       } = rootState.common;
 
-      // const res = await network.fetch.post('https://os.ncuos.com/api/stagger/before/student', {
-      //   reach_date,
-      //   reach_star_time,
-      //   reach_end_time,
+      const loadingTip = await ui.loading('加载中', 0);
 
-      //   // 基本信息
-      //   origin: origin?.join('-') ?? '未知',
-      //   destination,
+      try {
+        const res = await network.fetch.post('https://os.ncuos.com/api/stagger/before/student', {
+          reach_date,
+          reach_star_time,
+          reach_end_time,
 
-      //   // 交通信息
-      //   vehicle_type: vehicle_type?.[0] ?? '未知',
-      //   vehicle_info,
-      //   transit,
-      //   vehicle_arrival_time,
+          // 基本信息
+          origin: origin?.join('-') ?? '未知',
+          destination: destination?.[0] ?? '未知',
 
-      //   // 校区
-      //   campus,
-      // });
+          // 交通信息
+          vehicle_type: vehicle_type?.[0] ?? '未知',
+          vehicle_info,
+          transit,
+          vehicle_arrival_time,
 
-      console.log(res);
+          // 校区
+          campus,
+        });
+
+        console.log(res);
+      } catch (e) {
+        ui.fail('未知错误，请重试');
+      } finally {
+        loadingTip();
+      }
     },
   }),
 };
