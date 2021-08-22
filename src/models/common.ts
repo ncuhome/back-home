@@ -7,6 +7,8 @@ import dayjs from 'dayjs';
 export default {
   state: {
     status: '加载中...',
+    labelColor: '#7B7B7B',
+
     // 返校时间
     reachDate: undefined, // 返校日期 YYYY-MM-DD
     reachStartTime: undefined as unknown as Date, // 返校时间段 HH:mm
@@ -40,6 +42,7 @@ export default {
 
         if (data.data) {
           const {
+            origin: originPlace,
             vehicle_arrive_time,
             transit,
             reach_date,
@@ -51,21 +54,23 @@ export default {
             destination,
           } = data.data as IData;
 
-          const reachDate = new Date(dayjs(reach_date).valueOf());
+          const reachDate = reach_date && new Date(dayjs(reach_date).valueOf());
           (this as any).setData({
             campus,
-            origin: origin?.split('-'),
-            destination: [destination],
-            transit,
+            origin: originPlace && originPlace?.split('-'),
+            destination: destination && [destination],
+            transit: transit === '-' ? null : transit,
             reachDate,
-            reachStartTime: new Date(dayjs(`${reach_date} ${reach_start_time}`).valueOf()),
-            reachEndTime: new Date(dayjs(`${reach_date} ${reach_end_time}`).valueOf()),
-            vehicleType: [vehicle_type],
+            reachStartTime: reach_start_time && new Date(dayjs(`${reach_date} ${reach_start_time}`).valueOf()),
+            reachEndTime: reach_end_time && new Date(dayjs(`${reach_date} ${reach_end_time}`).valueOf()),
+            vehicleType: vehicle_type && [vehicle_type],
             vehicleInfo: vehicle_info,
-            vehicleArriveTime: new Date(dayjs(`${reach_date} ${vehicle_arrive_time}`).valueOf()),
+            vehicleArriveTime: vehicle_arrive_time && new Date(dayjs(`${reach_date} ${vehicle_arrive_time}`).valueOf()),
           });
         }
-        (this as any).setData({ status: getStatus(data.code) });
+
+        const { label, color } = getStatus(data.code);
+        (this as any).setData({ status: label, labelColor: color });
       } catch (e) {
         ui.fail('未知错误，请重试');
       } finally {
@@ -113,7 +118,8 @@ export default {
         const { status, message } = data;
 
         if (status) {
-          (this as any).setData({ status: getStatus(1) });
+          const { label, color } = getStatus(1);
+          (this as any).setData({ status: label, labelColor: color });
 
           ui.success(message);
         } else {

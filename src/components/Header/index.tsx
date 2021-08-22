@@ -23,7 +23,7 @@ function Header() {
     <WingBlank size="md">
       <Card full>
         <Card.Header
-          style={{ background: '#1874ff' }}
+          style={{ background: state.labelColor }}
           title={getName()}
           extra={dataModule.appData.user.profile.basicProfile.department}
         />
@@ -32,7 +32,13 @@ function Header() {
           <br />
           信息可多次填报，以最后一次填报为准。如果审核通过再重新填报，辅导员需要重新审核。
         </Card.Body>
-        <Card.Footer content={`当前状态: ${state.status}`} />
+        <Card.Footer
+          content={
+            <>
+              当前状态: <span style={{ color: state.labelColor }}>{state.status}</span>
+            </>
+          }
+        />
       </Card>
     </WingBlank>
   );

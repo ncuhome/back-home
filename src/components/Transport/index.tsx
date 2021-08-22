@@ -28,7 +28,7 @@ function Transport() {
       <InputItem
         clear
         placeholder="例：G100-02-16F"
-        defaultValue={vehicleInfo}
+        value={vehicleInfo}
         onChange={(e: any) => setData({ vehicleInfo: e })}
       >
         详细信息
@@ -36,7 +36,7 @@ function Transport() {
       <InputItem
         clear
         placeholder="如果无中转站，请忽略"
-        defaultValue={transit}
+        value={transit}
         onChange={(e: any) => setData({ transit: e })}
       >
         中转地点

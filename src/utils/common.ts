@@ -32,14 +32,32 @@ export const getCalcTime = (
 };
 
 const statusMap = {
-  [-2]: '暂时不返校',
-  [-1]: '延迟返校',
-  0: '未登记',
-  1: '已登记并审核中',
-  2: '审批通过',
-  3: '已返校',
+  [-2]: {
+    label: '暂时不返校',
+    color: '#FF6356',
+  },
+  [-1]: {
+    label: '延迟返校',
+    color: '#FF6356',
+  },
+  0: {
+    label: '未登记',
+    color: '#1874ff',
+  },
+  1: {
+    label: '已登记并审核中',
+    color: '#faac1c',
+  },
+  2: {
+    label: '审批通过',
+    color: '#10C53E',
+  },
+  3: {
+    label: '已返校',
+    color: '#13C8A2',
+  },
 };
 
-export const getStatus = (code: number): string => {
+export const getStatus = (code: number) => {
   return statusMap[code];
 };
