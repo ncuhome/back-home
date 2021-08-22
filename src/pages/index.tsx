@@ -6,6 +6,7 @@ import { vehiclesData, destinationsData, campusData, promiseData } from '@/utils
 import { useSafeArea } from 'mincu-react';
 import { getCalcTime } from '@/utils/common';
 import store from '@/store';
+import logo from '@/image/logo.svg';
 import './index.scss';
 
 const now = new Date(Date.now());
@@ -163,9 +164,12 @@ const App = () => {
           提交
         </Button>
       </WingBlank>
-      <div style={{ height: 40 }} />
-      <div style={{ textAlign: 'center', color: '#a5a5a5' }}>南昌大学家园工作室</div>
-      <div style={{ height: bottom + 10 }} />
+      <div style={{ height: 60 }} />
+      <div style={{ textAlign: 'center' }}>
+        <img src={logo} alt={'logo'} width={140} />
+        <div style={{ color: '#a5a5a5', marginTop: 5 }}>南昌大学家园工作室</div>
+      </div>
+      <div style={{ height: bottom + 30 }} />
       {renderModal()}
     </>
   );

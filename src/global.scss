@@ -8,11 +8,6 @@ div {
   transition: all 0.18s var(--bezier);
 }
 
-@font-face {
-  font-family: 'DIN Alternate';
-  src: url('../src/image/DIN.ttf');
-}
-
 :root {
   --bezier: cubic-bezier(0.4, 0, 0.2, 1);
   --primary-color: #267fe3;
