@@ -41,7 +41,7 @@ const statusMap = {
     color: '#FF6356',
   },
   0: {
-    label: '未登记',
+    label: '未申请',
     color: '#1874ff',
   },
   1: {

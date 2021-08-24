@@ -28,7 +28,7 @@ function Header() {
           extra={dataModule.appData.user.profile.basicProfile.department}
         />
         <Card.Body>
-          为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校登记，通过辅导员审批后方可返校。
+          为预防新冠疫情，南昌大学所有在校本科生，需要在返校前进行返校申请，通过辅导员审批后方可返校。
           <br />
           信息可多次填报，以最后一次填报为准。如果审核通过再重新填报，辅导员需要重新审核。
         </Card.Body>
