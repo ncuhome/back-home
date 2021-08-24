@@ -45,7 +45,7 @@ const statusMap = {
     color: '#1874ff',
   },
   1: {
-    label: '已登记并审核中',
+    label: '已申请并审核中',
     color: '#faac1c',
   },
   2: {
