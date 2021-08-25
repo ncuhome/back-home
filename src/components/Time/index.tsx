@@ -11,15 +11,15 @@ function Time() {
   const { setData } = userDispatchers;
 
   return (
-    <List renderHeader={() => '⏰ 返校时间'} renderFooter={() => '时间段最长为五个小时'}>
+    <List renderHeader={() => '⏰ 入校时间'} renderFooter={() => '时间段最长为五个小时'}>
       <DatePicker
         mode="date"
-        title={'返校日期'}
+        title={'入校日期'}
         value={reachDate}
         onChange={(e: any) => setData({ reachDate: e })}
         minDate={now}
       >
-        <List.Item arrow="horizontal">返校日期</List.Item>
+        <List.Item arrow="horizontal">入校日期</List.Item>
       </DatePicker>
       <DatePicker
         mode="time"

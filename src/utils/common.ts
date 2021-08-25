@@ -33,11 +33,11 @@ export const getCalcTime = (
 
 const statusMap = {
   [-2]: {
-    label: '暂时不返校',
+    label: '暂时不入校',
     color: '#FF6356',
   },
   [-1]: {
-    label: '延迟返校',
+    label: '延迟入校',
     color: '#FF6356',
   },
   0: {
@@ -53,7 +53,7 @@ const statusMap = {
     color: '#10C53E',
   },
   3: {
-    label: '已返校',
+    label: '已入校',
     color: '#13C8A2',
   },
 };

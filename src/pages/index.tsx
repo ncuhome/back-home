@@ -30,7 +30,7 @@ const App = () => {
         transparent
         maskClosable={false}
         onClose={() => setVisible(false)}
-        title="学生返校承诺书"
+        title="学生入校承诺书"
         footer={[
           {
             text: '取消',
@@ -64,7 +64,7 @@ const App = () => {
     }
 
     if (Math.abs(timeMinuteRange) > 5 * 60) {
-      ui.fail('返校时间段需在五个小时以内');
+      ui.fail('入校时间段需在五个小时以内');
       return;
     }
 
@@ -80,7 +80,7 @@ const App = () => {
         <WhiteSpace />
       </>
 
-      {/* 返校时间 */}
+      {/* 入校时间 */}
       <Time />
 
       {/* 基本信息 */}

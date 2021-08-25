@@ -9,9 +9,9 @@ export default {
     status: '加载中...',
     labelColor: '#7B7B7B',
 
-    // 返校时间
-    reachDate: undefined, // 返校日期 YYYY-MM-DD
-    reachStartTime: undefined as unknown as Date, // 返校时间段 HH:mm
+    // 入校时间
+    reachDate: undefined, // 入校日期 YYYY-MM-DD
+    reachStartTime: undefined as unknown as Date, // 入校时间段 HH:mm
     reachEndTime: undefined as unknown as Date,
 
     // 基本信息
