@@ -5325,4 +5325,16 @@ export const data = [
     label: '新疆维吾尔自治区',
     value: '新疆维吾尔自治区',
   },
+  {
+    label: '香港',
+    value: '香港',
+  },
+  {
+    label: '澳门',
+    value: '澳门',
+  },
+  {
+    label: '台湾',
+    value: '台湾',
+  },
 ];
