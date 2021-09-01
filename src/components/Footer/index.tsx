@@ -9,7 +9,7 @@ function Footer() {
     <>
       <div style={{ height: 60 }} />
       <div style={{ textAlign: 'center' }}>
-        <img src={logo} alt={'logo'} width={140} />
+        <img src={logo} alt={'logo'} width={140} style={{ marginRight: 7 }} />
         <div style={{ color: '#a5a5a5', marginTop: 5 }}>南昌大学家园工作室</div>
       </div>
       <div style={{ height: bottom + 30 }} />
