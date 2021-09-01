@@ -23,7 +23,7 @@ export const getCalcTime = (
 
   const down = now.set('hour', 19);
 
-  if (now.isAfter(down)) {
+  if (now.isAfter(down) || now.isSame(down)) {
     return new Date(now.set('hour', 23).set('minute', 59).valueOf());
   }
 
