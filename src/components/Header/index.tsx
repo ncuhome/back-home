@@ -3,6 +3,7 @@ import { WingBlank, Card } from 'antd-mobile';
 import dataModule from 'mincu-data';
 import network from 'mincu-network';
 import store from '@/store';
+import dayjs from 'dayjs';
 
 function Header() {
   const [state, userDispatchers] = store.useModel('common');
@@ -28,7 +29,8 @@ function Header() {
           extra={dataModule.appData.user.profile.basicProfile.department}
         />
         <Card.Body>
-          为统筹做好学校秋季开学及常态化疫情防控工作，切实保障全体师生员工的安全健康以及正常的教育教学秩序。
+          为统筹做好学校{dayjs().month() >= 5 ? '秋季' : '春季'}
+          开学及常态化疫情防控工作，切实保障全体师生员工的安全健康以及正常的教育教学秩序。
           <br />
           南昌大学所有符合正常来校条件的学生，需要在入校前进行返校报到审批，通过辅导员审批后方可入校。
           <br />
