@@ -11,7 +11,7 @@ function Time() {
   const { setData } = userDispatchers;
 
   return (
-    <List renderHeader={() => '⏰ 入校时间'} renderFooter={() => '时间段最长为五个小时'}>
+    <List renderHeader={() => '⏰ 入校时间'} renderFooter={() => '时间段最长为两个小时'}>
       <DatePicker
         mode="date"
         title={'入校日期'}
@@ -35,7 +35,7 @@ function Time() {
         value={reachEndTime}
         onChange={(e: any) => setData({ reachEndTime: e })}
         minDate={reachStartTime}
-        maxDate={getCalcTime(reachStartTime, 'add', 5, 'hours')}
+        maxDate={getCalcTime(reachStartTime, 'add', 2, 'hours')}
       >
         <List.Item arrow="horizontal">结束时间</List.Item>
       </DatePicker>
