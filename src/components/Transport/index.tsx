@@ -2,6 +2,7 @@ import React from 'react';
 import { DatePicker, List, Picker, InputItem } from 'antd-mobile';
 import { vehiclesData } from '@/utils/data';
 import store from '@/store';
+import ui from 'mincu-ui';
 
 const now = new Date(Date.now());
 
@@ -29,7 +30,13 @@ function Transport() {
         clear
         placeholder="例：G100-02-16F"
         value={vehicleInfo}
-        onChange={(e: any) => setData({ vehicleInfo: e })}
+        onChange={(e: any) => {
+          if (e.length > 30) {
+            ui.fail('详细信息的长度请不要超过三十个字符');
+            return;
+          }
+          setData({ vehicleInfo: e });
+        }}
       >
         详细信息
       </InputItem>
