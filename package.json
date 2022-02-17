@@ -9,7 +9,7 @@
     "@types/react-dom": "^16.9.5",
     "eslint": "^6.8.0",
     "ice.js": "^1.0.0",
-    "mincu-debug": "^1.1.2-alpha.2",
+    "mincu-debug": "^2.3.3",
     "stylelint": "^13.7.2",
     "stylelint-config-recommended": "^5.0.0",
     "stylelint-prettier": "^1.2.0"
@@ -48,7 +48,8 @@
     "build-plugin-antd": "^0.1.1",
     "clsx": "^1.1.1",
     "ga-lite": "^2.1.0",
-    "mincu-react": "^1.1.2-alpha.2",
+    "icejs": "^0.0.1",
+    "mincu-react": "^2.3.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-ga": "^3.3.0",
