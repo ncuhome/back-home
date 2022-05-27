@@ -1,9 +1,6 @@
 {
-  "esbuild": {
-    "target": ["es2015"]
-  },
+  "minify": "esbuild",
   "hash": true,
-  "modularImportRuntime": true,
   "plugins": [
     [
       "build-plugin-antd",
