@@ -7,7 +7,8 @@ const isLower = location.href.includes('?lower=true');
 const MincuProvider: React.FC = ({ children = null }) => {
   const isReady = useAppReady(() => {
     // eslint-disable-next-line no-alert
-    alert('请使用南大家园打开');
+    alert('请登录云家园在错峰返校模块登记');
+    window.location.href="https://www.ncuos.com/index/app_cffx"
   });
 
   if (isLower) {
