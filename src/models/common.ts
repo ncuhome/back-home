@@ -35,11 +35,9 @@ export default {
   },
   effects: () => ({
     async initialStatus() {
-      const loadingTip = await ui.loading('加载中', 0);
-
+      // const loadingTip = await ui.loading('加载中',0);
       try {
         const { data } = await network.fetch.get('https://os.ncuos.com/api/stagger/before/student');
-
         if (data.data) {
           const {
             origin: originPlace,
@@ -74,7 +72,7 @@ export default {
       } catch (e) {
         ui.fail('未知错误，请重试');
       } finally {
-        loadingTip();
+        // loadingTip();
       }
     },
     async submit(payload, rootState) {
@@ -91,7 +89,7 @@ export default {
         vehicleArriveTime: vehicle_arrive_time,
       } = rootState.common;
 
-      const loadingTip = await ui.loading('加载中', 0);
+      const loadingTip = await ui.loading('加载中',0);
 
       try {
         const params = {
