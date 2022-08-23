@@ -44,7 +44,13 @@ function Transport() {
         clear
         placeholder="如果无中转站，请忽略"
         value={transit}
-        onChange={(e: any) => setData({ transit: e })}
+        onChange={(e: any) =>{
+          if(e.length>40){
+            ui.fail('详细信息的长度请不要超过三十个字符')
+            return
+          }
+           setData({ transit: e })
+          }}
       >
         中转地点
       </InputItem>
