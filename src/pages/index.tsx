@@ -1,8 +1,7 @@
 import React from 'react';
 import ui from 'mincu-ui';
 import dayjs from 'dayjs';
-import { WhiteSpace, Button, WingBlank, Modal } from 'antd-mobile';
-import { promiseData } from '@/utils/data';
+import { WhiteSpace, Button, WingBlank } from 'antd-mobile';
 import store from '@/store';
 
 import Header from '@/components/Header';
@@ -18,39 +17,8 @@ import './index.scss';
  * 建议使用真机调试
  */
 const App = () => {
-  const [visible, setVisible] = React.useState(false);
   const [state, userDispatchers] = store.useModel('common');
   const { submit } = userDispatchers;
-
-  // 协议
-  const renderModal = () => {
-    return (
-      <Modal
-        visible={visible}
-        transparent
-        maskClosable={false}
-        onClose={() => setVisible(false)}
-        title="学生入校承诺书"
-        footer={[
-          {
-            text: '取消',
-            onPress: () => {
-              setVisible(false);
-            },
-          },
-          {
-            text: '同意并提交',
-            onPress: () => {
-              submit();
-              setVisible(false);
-            },
-          },
-        ]}
-      >
-        <div style={{ height: '32vh', overflow: 'scroll' }}>{promiseData}</div>
-      </Modal>
-    );
-  };
 
   // 校验
   const onNext = () => {
@@ -68,7 +36,7 @@ const App = () => {
       return;
     }
 
-    setVisible(true);
+    submit();
   };
 
   return (
@@ -107,8 +75,6 @@ const App = () => {
 
       {/* LOGO */}
       <Footer />
-
-      {renderModal()}
     </>
   );
 };
